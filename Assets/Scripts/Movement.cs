@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField]float RotationAmount=100f;
-    [SerializeField]float ThrustAmount=100f;
+    AudioSource aS;
+    [SerializeField] float RotationAmount = 100f;
+    [SerializeField] float ThrustAmount = 100f;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        rb=GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        aS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -20,10 +22,10 @@ public class Movement : MonoBehaviour
         ProcessRotation();
     }
 
-  
+
     void ProcessRotation()
     {
-         if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             RotationMethod(RotationAmount);
         }
@@ -33,18 +35,25 @@ public class Movement : MonoBehaviour
         }
     }
 
-  void ProcessThrust()
+    void ProcessThrust()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up*ThrustAmount*Time.deltaTime);
+            rb.AddRelativeForce(Vector3.up * ThrustAmount * Time.deltaTime);
+            if (!aS.isPlaying)
+            {
+                aS.Play();
+            }
         }
+        else
+                aS.Stop();
+
 
     }
-     void RotationMethod(float rotationThisFrame)
+    void RotationMethod(float rotationThisFrame)
     {
-        rb.freezeRotation=true;//Freezing rotation so we can manually rotation
+        rb.freezeRotation = true;//Freezing rotation so we can manually rotation
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
-        rb.freezeRotation=false;//unFreezing rotation so physics system can take over
+        rb.freezeRotation = false;//unFreezing rotation so physics system can take over
     }
 }
