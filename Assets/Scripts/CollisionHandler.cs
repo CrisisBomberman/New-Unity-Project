@@ -25,6 +25,7 @@ public class CollisionHandler : MonoBehaviour
     void ReloadLevel()
     {
         //SceneManager.LoadScene(0); belirli bir indexi çağırırken alttaki o an aktif olanı çağırıyor
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        int currentSceneIndex =SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
