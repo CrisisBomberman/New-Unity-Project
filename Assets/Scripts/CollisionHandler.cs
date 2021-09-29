@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
     void OnCollisionEnter(Collision collisionInfo)
@@ -18,6 +18,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
             default:
                 Debug.Log("You Blew Up");
+                SceneManager.LoadScene(0);
                 break;
 
         }
