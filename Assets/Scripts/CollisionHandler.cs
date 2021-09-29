@@ -17,10 +17,13 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("U picked up fuel");
                 break;
             default:
-                Debug.Log("You Blew Up");
-                SceneManager.LoadScene(0);
+            ReloadLevel();
                 break;
 
         }
+    }
+    void ReloadLevel()
+    {
+        SceneManager.LoadScene(0);
     }
 }
