@@ -2,12 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
-    int currentSceneIndex;
-    private void Start()
-    {
-
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-    }
     void OnCollisionEnter(Collision collisionInfo)
     {
         switch (collisionInfo.gameObject.tag)
@@ -17,10 +11,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
 
             case "Finish":
-                LoadNextLevel(currentSceneIndex);
-                break;
-            case "ReloadFirst":
-                SceneManager.LoadScene(0);
+                LoadNextLevel();
                 break;
             case "Fuel":
                 Debug.Log("U picked up fuel");
@@ -31,13 +22,20 @@ public class CollisionHandler : MonoBehaviour
 
         }
     }
-    void LoadNextLevel(int LNL)
+    void LoadNextLevel()
     {
-        SceneManager.LoadScene(LNL+1);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex+1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
     }
     void ReloadLevel()
     {
         //SceneManager.LoadScene(0); belirli bir indexi çağırırken alttaki o an aktif olanı çağırıyor
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
 }
