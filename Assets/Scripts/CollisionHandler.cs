@@ -3,6 +3,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField]AudioClip deathSFX;
+    [SerializeField]AudioClip winSFX;
+    AudioSource audioSource;
+     void Start() 
+     {
+        audioSource=GetComponent<AudioSource>();
+    }
     [SerializeField]float invokeTimer=1f;
     void OnCollisionEnter(Collision collisionInfo)
     {
@@ -28,13 +35,14 @@ public class CollisionHandler : MonoBehaviour
      void StartSuccessSequence()
     {
         //vfx and sfx to be added further
+        audioSource.PlayOneShot(winSFX);
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel",invokeTimer);
     }
 
     void StartCrashSequence()
     {
-        //vfx and sfx to be added further
+        audioSource.PlayOneShot(deathSFX);
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", invokeTimer);
     }

@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     AudioSource aS;
     [SerializeField] float RotationAmount = 100f;
     [SerializeField] float ThrustAmount = 100f;
+    [SerializeField]AudioClip mainEngine;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -42,7 +43,7 @@ public class Movement : MonoBehaviour
             rb.AddRelativeForce(Vector3.up * ThrustAmount * Time.deltaTime);
             if (!aS.isPlaying)
             {
-                aS.Play();
+                aS.PlayOneShot(mainEngine);
             }
         }
         else
