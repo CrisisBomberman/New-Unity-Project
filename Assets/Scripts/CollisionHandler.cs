@@ -15,6 +15,9 @@ public class CollisionHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision collisionInfo)
     {
+        if (isTransitioning)
+        return;
+        //ignores all the things under return and goes back to beginning
         switch (collisionInfo.gameObject.tag)
         {
             case "Friendly":
@@ -36,26 +39,16 @@ public class CollisionHandler : MonoBehaviour
 
      void StartSuccessSequence()
     {
-        //vfx and sfx to be added further
-        if(isTransitioning==false)
-        {
-
         audioSource.PlayOneShot(winSFX);
-        isTransitioning=true;
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel",invokeTimer);
-        }
     }
 
     void StartCrashSequence()
     {
-        if(isTransitioning==false)
-        {
         audioSource.PlayOneShot(deathSFX);
-        isTransitioning=true;
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", invokeTimer);
-        }
     }
     // void DelayMethod(string dWord)
     // {
