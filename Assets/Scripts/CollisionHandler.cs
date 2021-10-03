@@ -11,6 +11,8 @@ public class CollisionHandler : MonoBehaviour
         audioSource=GetComponent<AudioSource>();
     }
     [SerializeField]float invokeTimer=1f;
+     bool isTransitioning;
+
     void OnCollisionEnter(Collision collisionInfo)
     {
         switch (collisionInfo.gameObject.tag)
@@ -35,16 +37,25 @@ public class CollisionHandler : MonoBehaviour
      void StartSuccessSequence()
     {
         //vfx and sfx to be added further
+        if(isTransitioning==false)
+        {
+
         audioSource.PlayOneShot(winSFX);
+        isTransitioning=true;
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel",invokeTimer);
+        }
     }
 
     void StartCrashSequence()
     {
+        if(isTransitioning==false)
+        {
         audioSource.PlayOneShot(deathSFX);
+        isTransitioning=true;
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", invokeTimer);
+        }
     }
     // void DelayMethod(string dWord)
     // {
