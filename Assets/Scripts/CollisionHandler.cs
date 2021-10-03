@@ -42,6 +42,7 @@ public class CollisionHandler : MonoBehaviour
     void StartSuccessSequence()
     {
         isTransitioning=true;
+        audioSource.Stop();
         audioSource.PlayOneShot(winSFX);
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", invokeTimer);
@@ -50,6 +51,7 @@ public class CollisionHandler : MonoBehaviour
     void StartCrashSequence()
     {
          isTransitioning=true;
+         audioSource.Stop();
         audioSource.PlayOneShot(deathSFX);
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", invokeTimer);
