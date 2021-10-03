@@ -3,20 +3,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
-    [SerializeField]AudioClip deathSFX;
-    [SerializeField]AudioClip winSFX;
+    [SerializeField] AudioClip deathSFX;
+    [SerializeField] AudioClip winSFX;
     AudioSource audioSource;
-     void Start() 
-     {
-        audioSource=GetComponent<AudioSource>();
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
-    [SerializeField]float invokeTimer=1f;
-     bool isTransitioning;
+    [SerializeField] float invokeTimer = 1f;
+    bool isTransitioning;
 
     void OnCollisionEnter(Collision collisionInfo)
     {
         if (isTransitioning)
-        return;
+        {
+            return;
+        }
         //ignores all the things under return and goes back to beginning
         switch (collisionInfo.gameObject.tag)
         {
@@ -37,15 +39,17 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-     void StartSuccessSequence()
+    void StartSuccessSequence()
     {
+        isTransitioning=true;
         audioSource.PlayOneShot(winSFX);
         GetComponent<Movement>().enabled = false;
-        Invoke("LoadNextLevel",invokeTimer);
+        Invoke("LoadNextLevel", invokeTimer);
     }
 
     void StartCrashSequence()
     {
+         isTransitioning=true;
         audioSource.PlayOneShot(deathSFX);
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", invokeTimer);
